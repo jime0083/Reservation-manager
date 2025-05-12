@@ -1,40 +1,70 @@
 <template>
-    <form @submit.prevent="submitReservation">
-        <input v-model="name" placeholder="名前を入力" required>
-        <input type="date" v-model="date" required>
-        <select v-model="time" required>
-            <option disabled value="">時間の選択</option>
-            <option>10:00</option>
-            <option>13:00</option>
-            <option>16:00</option>
-        </select>
+    <form @submit.prevent="submitForm">
+        <div>
+            <label>名前:</label>
+            <input v-model="form.name" type="text">
+            <span v-if="errorMessages.name" class="error">{{ errorMessages.name }}</span>
+        </div>
+
+        <div>
+            <label>日付:</label>
+            <input v-model="form.date" type="date">
+            <span v-if="errorMessages.date" class="error">{{ errorMessages.date }}</span>
+        </div>
+
+        <div>
+            <label>時間:</label>
+            <input v-model="form.time" type="time">
+            <span v-if="errorMessages.time" class="error">{{ errorMessages.time }}</span>
+        </div>
+
         <button type="submit">予約する</button>
     </form>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
-import { useReservationStore } from '../store/reservationStore';
+import { reactive} from 'vue';
 
-const name=ref('');
-const date=ref('');
-const time=ref('');
-const store=useReservationStore();
+const form=reactive({
+    name:'',
+    date:'',
+    time:''
+})
 
-const submitReservation=()=>{
-    if(!name.value || !date.value || !time.value) return;
-    store.addReservation({
-        name:name.value,
-        date:date.value,
-        time:time.value,
-    });
+const errors=reactive({
+    name:'',
+    date:'',
+    time:''
+})
 
-    //入力内容をリセット
-    name.value='';
-    date.value='';
-    time.value='';
-};
+const submitForm=()=>{
+    //エラーを初期化
+    errors.name=''
+    errors.date=''
+    errors.time=''
 
+    //バリテーション
+    let valid=true
+    if(!form.name){
+        errors.name='名前は必須です'
+        valid=false
+    }
+
+    if(!form.date){
+        errors.name='日付は必須です'
+        valid=false
+    }
+
+    if(!form.time){
+        errors.name='時間は必須です'
+        valid=false
+    }
+
+    if(valid){
+        // 後続の処理（API送信など）は Step 6 で実装予定
+        alert('予約情報が送信されました')
+    }
+}
 </script>
 
 
