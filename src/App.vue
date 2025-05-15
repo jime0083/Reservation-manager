@@ -6,8 +6,13 @@
       <router-link to="/create">予約作成</router-link>
     </nav>
     <router-view />
+    <NotificationBar />
   </div>
 </template>
+
+<script setup>
+import NotificationBar from './components/NotificationBar.vue';
+</script>
 
 <style>
 nav {

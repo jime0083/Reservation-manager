@@ -2,7 +2,7 @@ import {defineStore} from 'pinia';
 import {ref} from 'vue';
 
 export const useBookingStore=defineStore('booking',()=>{
-    const booking=ref([]);
+    const bookings=ref([]);
     const editingBooking=ref(null);
 
     const addBooking=(booking)=>{
